@@ -60,24 +60,23 @@ const getRandomPictureURL = createRandomIdFromRangeGenerator(1, 25);
 const getRandomPictureLikes = getRandomInteger(15, 200);
 const getRandomCommentId = createRandomIdFromRangeGenerator(1, 1000);
 
-const createPost = () => ({
-  id: getRandomPostId(),
-  url: photos/{getRandomPictureURL()}.jpg,
-  description: getRandomArrayElement(DESCRIPTION),
-  likes: getRandomPictureLikes,
-  comments: commentsList
-});
-
-
 // Массив объектов COMMENT
 
 const createComment = () => ({
   id: getRandomCommentId(),
-  avatar: img/avatar-${getRandomInteger(1, 6)}.svg,
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGE),
   name: getRandomArrayElement(NAME)
 });
-const commentsList = Array.from({length: getRandomInteger (1, 30)}, createComment);
+
+// Пост
+const createPost = () => ({
+  id: getRandomPostId(),
+  url: `photos/{getRandomPictureURL()}.jpg`,
+  description: getRandomArrayElement(DESCRIPTION),
+  likes: getRandomPictureLikes,
+  comments: Array.from({length: getRandomInteger (1, 30)}, createComment)
+});
 
 // Итоговый массив постов
 const POSTS = Array.from({length: POST_NUMBER}, createPost);
