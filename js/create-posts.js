@@ -1,6 +1,6 @@
-import {getRandomInteger} from './util';
-import {createRandomIdFromRangeGenerator} from './util';
-import {getRandomArrayElement} from './util';
+import {getRandomInteger} from './util.js';
+import {createRandomIdFromRangeGenerator} from './util.js';
+import {getRandomArrayElement} from './util.js';
 
 const NAME = [
   'Гарик Харламов',
