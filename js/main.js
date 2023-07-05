@@ -4,3 +4,5 @@ import {pictureListFragment} from './picture-preview.js';
 
 const picturePreview = document.querySelector('.pictures');
 picturePreview.append(pictureListFragment);
+
+import './popup.js';
