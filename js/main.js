@@ -1,3 +1,5 @@
+import './popup.js';
+
 import { createPosts } from './create-posts.js';
 
 import {pictureListFragment} from './picture-preview.js';
