@@ -27,8 +27,8 @@ function closePopup () {
   pictureCommentsLoader.removeEventListener('click', getLoadComments);
 }
 
-const createComment = (picture) => {
-  picture.comments.forEach((comment) => {
+const createComment = (comments) => {
+  comments.forEach((comment) => {
     const commentElement = document.createElement('li');
     const commentImage = document.createElement('img');
     const commentText = document.createElement('p');
@@ -52,8 +52,7 @@ const getLoadComments = () => {
     return;
   }
   const additionalComments = commentsShowArray.slice(commentsList.children.length, commentsList.children.length + COMMENT_PER_CLICK);
-  // createComment(additionalComments);
-  createComment({ comments: additionalComments });
+  createComment(additionalComments);
   pictureCommentsCounter.textContent =
    `${commentsList.children.length} из ${commentsShowArray.length} комментариев`;
 
@@ -88,7 +87,7 @@ const openPopup = (picture) => {
 
   pictureCommentsLoader.addEventListener('click', getLoadComments);
 
-  fillComments();
+  fillComments(picture);
   closeButton.addEventListener('click', closePopup);
   document.addEventListener('keydown', onDocumentKeydown);
 };
