@@ -47,7 +47,7 @@ const createComment = (comments) => {
   });
 };
 
-const getLoadComments = () => {
+function getLoadComments () {
   if (!commentsShowArray.length) {
     return;
   }
@@ -59,7 +59,7 @@ const getLoadComments = () => {
   if (commentsShowArray.length <= commentsList.children.length) {
     pictureCommentsLoader.classList.add('hidden');
   }
-};
+}
 
 function fillComments({comments}) {
   const showFirstComments = comments.slice(0, COMMENT_PER_CLICK);
