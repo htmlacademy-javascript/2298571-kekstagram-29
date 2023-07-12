@@ -1,4 +1,5 @@
 import './popup.js';
+import './form-main.js';
 
 import {createPosts} from './create-posts.js';
 
