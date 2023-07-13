@@ -1,5 +1,7 @@
 import './popup.js';
 import './form-main.js';
+import './slider.js';
+import './new-picture-scale.js';
 
 import {createPosts} from './create-posts.js';
 

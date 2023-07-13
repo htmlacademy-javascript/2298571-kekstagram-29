@@ -5,6 +5,7 @@ const ImageUploadButton = popupForm.querySelector('.img-upload__input');
 const FormCloseButton = popupForm.querySelector('.img-upload__cancel');
 const hashtagInput = popupForm.querySelector('.text__hashtags');
 const commentInput = popupForm.querySelector('.text__description');
+const imagePreview = popupForm.querySelector('.img-upload__preview img');
 
 // Закрытие формы по клику и esc
 const onDocumentKeydown = (evt) => {
@@ -21,6 +22,7 @@ function closeForm () {
   ImageUploadButton.value = '';
   hashtagInput.value = '';
   commentInput.value = '';
+  pristine.reset();
   NewPictureForm.classList.add('hidden');
   body.classList.remove('modal-open');
   FormCloseButton.removeEventListener('click', closeForm);
@@ -43,11 +45,6 @@ ImageUploadButton.addEventListener('change',(evt) => {
 
 // Валидация
 
-// экспортируем (
-//   переменные: popupForm, hashtagInput, commentInput, pristine
-//   функции: renderHashtagErrors
-// )
-
 const pristine = new Pristine (popupForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -65,12 +62,8 @@ const checkSymbolsAndLength = (array) =>{
 };
 
 const checkDuplicates = (array) => {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[i] === array[j]) {
-        return true;
-      }
-    }
+  if (array.length !== new Set(array).size){
+    return true;
   }
   return false;
 };
@@ -109,3 +102,4 @@ popupForm.addEventListener('submit', (evt) => {
   pristine.validate();
 });
 
+export {imagePreview, popupForm};
