@@ -2,7 +2,7 @@ import {imagePreview, popupForm} from './form-main.js';
 
 const sliderContainer = popupForm.querySelector('.img-upload__effect-level');
 const slider = popupForm.querySelector('.effect-level__slider');
-// const effectLevel = popupForm.querySelector('.effect-level__value');
+const effectLevel = popupForm.querySelector('.effect-level__value');
 const effectButtons = popupForm.querySelectorAll('.effects__radio');
 
 const EFFECTS = [
@@ -71,6 +71,7 @@ const applyEffect = () => {
     defoltSlider();
   }
   const sliderPosition = slider.noUiSlider.get();
+  effectLevel.value = sliderPosition;
   imagePreview.style.filter = `${chosenEffect.style}(${sliderPosition}${chosenEffect.unit})`;
   imagePreview.classList.add(`effects__preview--${chosenEffect.name}`);
 };
@@ -88,7 +89,6 @@ const updateSlider = () => {
 };
 
 const findClickEffect = (evt) => {
-  evt.preventDefault();
   const button = evt.target;
   const index = Array.from(effectButtons).indexOf(button);
   chosenEffect = EFFECTS[index];
@@ -109,5 +109,5 @@ noUiSlider.create(slider, {
 slider.noUiSlider.on('update', applyEffect);
 
 effectButtons.forEach((button) => {
-  button.addEventListener('click', findClickEffect);
+  button.addEventListener('change', findClickEffect);
 });
