@@ -14,6 +14,7 @@ picturesData.forEach((picture) => {
   pictureItem.querySelector('.picture__likes').textContent = picture.likes;
   pictureItem.querySelector('.picture__comments').textContent = picture.comments.length;
   pictureItem.addEventListener('click',() => {
+
     openPopup(picture);
   });
   pictureListFragment.appendChild(pictureItem);

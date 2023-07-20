@@ -1,3 +1,5 @@
+import {sendData} from './api.js';
+
 const body = document.querySelector('body');
 const popupForm = document.querySelector('.img-upload__form');
 const NewPictureForm = popupForm.querySelector('.img-upload__overlay');
@@ -6,6 +8,7 @@ const FormCloseButton = popupForm.querySelector('.img-upload__cancel');
 const hashtagInput = popupForm.querySelector('.text__hashtags');
 const commentInput = popupForm.querySelector('.text__description');
 const imagePreview = popupForm.querySelector('.img-upload__preview img');
+const formSubmit = popupForm.querySelector('.img-upload__submit');
 
 // Закрытие формы по клику и esc
 const onDocumentKeydown = (evt) => {
@@ -99,7 +102,11 @@ pristine.addValidator(hashtagInput, validateHashtag, renderHashtagErrors);
 
 popupForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (isValid) {
+    const formData = new FormData(evt.target);
+    sendData();
+  }
 });
 
 export {imagePreview, popupForm};
