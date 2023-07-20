@@ -1,7 +1,7 @@
 import './popup.js';
 import './form-main.js';
 import './slider.js';
-import './new-picture-scale.js';
+import './scale.js';
 import './api.js';
 import {getData, sendData} from './api.js';
 import {createThumbnails} from './picture-preview.js';

@@ -1,5 +1,5 @@
 import {defoltSlider} from './slider.js';
-import {resetScale} from './new-picture-scale.js';
+import {resetScale} from './scale.js';
 
 const body = document.querySelector('body');
 const popupForm = document.querySelector('.img-upload__form');
@@ -23,21 +23,23 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closeForm () {
-  ImageUploadButton.value = '';
-  hashtagInput.value = '';
-  commentInput.value = '';
-  pristine.reset();
-  defoltSlider();
-  resetScale();
+  // ImageUploadButton.value = '';
+  // hashtagInput.value = '';
+  // commentInput.value = '';
   NewPictureForm.classList.add('hidden');
   body.classList.remove('modal-open');
   FormCloseButton.removeEventListener('click', closeForm);
   document.removeEventListener('keydown', onDocumentKeydown);
+
+  defoltSlider();
+  resetScale();
+  pristine.reset();
+  popupForm.reset();
 }
 
 // Открытие формы
 
-const openForm = () =>{
+const openForm = () => {
   NewPictureForm.classList.remove('hidden');
   body.classList.add('modal-open');
   FormCloseButton.addEventListener('click', closeForm);
