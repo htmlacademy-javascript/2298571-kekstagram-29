@@ -38,8 +38,7 @@ minusSizeButton.addEventListener('click', (evt) => {
 
 const resetScale = () => {
   currentSize = maxValue;
-  plusSizeButton.removeEventListener('click', increaseSize);
-  minusSizeButton.removeEventListener('click', decreaseSize);
+  imagePreview.style.transform = '';
 };
 
 export {resetScale};
