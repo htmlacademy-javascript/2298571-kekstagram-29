@@ -1,9 +1,8 @@
-import {imagePreview, popupForm} from './form-main.js';
-
-const sliderContainer = popupForm.querySelector('.img-upload__effect-level');
-const slider = popupForm.querySelector('.effect-level__slider');
-const effectLevel = popupForm.querySelector('.effect-level__value');
-const effectButtons = popupForm.querySelectorAll('.effects__radio');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const slider = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level__value');
+const effectButtons = document.querySelectorAll('.effects__radio');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const EFFECTS = [
   {
@@ -111,3 +110,5 @@ slider.noUiSlider.on('update', applyEffect);
 effectButtons.forEach((button) => {
   button.addEventListener('change', findClickEffect);
 });
+
+export {defoltSlider};

@@ -1,10 +1,10 @@
 const URL = 'https://29.javascript.pages.academy/kekstagram';
-const path = {
-  GET: '/',
-  SEND: '/data'
+const PATH = {
+  GET: '/data',
+  SEND: '/',
 };
 
-const errorText = {
+const ERROR_TEXT = {
   GET: 'Не удалось получить данные',
   POST: 'Не удалось отправить данные'
 };
@@ -13,9 +13,9 @@ const Method = {
   POST: 'POST'
 };
 
-const loadData = async (path, errorText, Method, body = null) => {
+const loadData = async (path, errorText, method = Method.GET, body = null) => {
   try {
-    const response = await fetch(`${URL}${path}`, { Method, body });
+    const response = await fetch(`${URL}${path}`, { method, body });
     if (!response.ok) {
       throw new Error(errorText);
     }
@@ -25,7 +25,7 @@ const loadData = async (path, errorText, Method, body = null) => {
   }
 };
 
-const getData = () => loadData(path.GET, errorText.GET);
-const sendData = (body) => loadData(path.SEND, errorText.POST, Method.POST);
+const getData = () => loadData(PATH.GET, ERROR_TEXT.GET);
+const sendData = (body) => loadData(PATH.SEND, ERROR_TEXT.POST, Method.POST, body);
 
 export {getData, sendData};

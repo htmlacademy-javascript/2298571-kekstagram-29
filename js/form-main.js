@@ -1,4 +1,5 @@
-import {sendData} from './api.js';
+import {defoltSlider} from './slider.js';
+import {resetScale} from './new-picture-scale.js';
 
 const body = document.querySelector('body');
 const popupForm = document.querySelector('.img-upload__form');
@@ -8,7 +9,7 @@ const FormCloseButton = popupForm.querySelector('.img-upload__cancel');
 const hashtagInput = popupForm.querySelector('.text__hashtags');
 const commentInput = popupForm.querySelector('.text__description');
 const imagePreview = popupForm.querySelector('.img-upload__preview img');
-const formSubmit = popupForm.querySelector('.img-upload__submit');
+const submitButton = popupForm.querySelector('.img-upload__submit');
 
 // Закрытие формы по клику и esc
 const onDocumentKeydown = (evt) => {
@@ -26,6 +27,8 @@ function closeForm () {
   hashtagInput.value = '';
   commentInput.value = '';
   pristine.reset();
+  defoltSlider();
+  resetScale();
   NewPictureForm.classList.add('hidden');
   body.classList.remove('modal-open');
   FormCloseButton.removeEventListener('click', closeForm);
@@ -45,6 +48,22 @@ ImageUploadButton.addEventListener('change',(evt) => {
   evt.preventDefault();
   openForm();
 });
+
+// Отправка формы
+const SubmitButtonMessage = {
+  REST: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonMessage.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonMessage.REST;
+};
 
 // Валидация
 
@@ -100,13 +119,18 @@ const renderHashtagErrors = () => {
 
 pristine.addValidator(hashtagInput, validateHashtag, renderHashtagErrors);
 
-popupForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    const formData = new FormData(evt.target);
-    sendData();
-  }
-});
+const sendForm = (cb) => {
+  popupForm.addEventListener('submit', async(evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+      await cb(formData);
+    }
+    unblockSubmitButton();
+  });
+};
 
-export {imagePreview, popupForm};
+
+export {imagePreview, sendForm, closeForm};
