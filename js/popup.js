@@ -19,12 +19,20 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const resetPopupData = () => {
+  commentsList.innerHTML = '';
+  pictureCommentsLoader.classList.remove('hidden');
+  pictureCommentsCounter.classList.remove('hidden');
+};
+
 function closePopup () {
   popup.classList.add('hidden');
   body.classList.remove('modal-open');
   closeButton.removeEventListener('click', closePopup);
   document.removeEventListener('keydown', onDocumentKeydown);
   pictureCommentsLoader.removeEventListener('click', getLoadComments);
+
+  resetPopupData();
 }
 
 const createComment = (comments) => {
@@ -61,7 +69,7 @@ function getLoadComments () {
   }
 }
 
-function fillComments({comments}) {
+const fillComments = ({comments}) => {
   const showFirstComments = comments.slice(0, COMMENT_PER_CLICK);
 
   createComment(showFirstComments);
@@ -72,7 +80,7 @@ function fillComments({comments}) {
     pictureCommentsCounter.classList.add('hidden');
     pictureCommentsLoader.classList.add('hidden');
   }
-}
+};
 
 const openPopup = (picture) => {
   commentsList.innerHTML = '';

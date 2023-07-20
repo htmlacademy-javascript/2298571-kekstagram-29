@@ -1,3 +1,6 @@
+import {defoltSlider} from './slider.js';
+import {resetScale} from './scale.js';
+
 const body = document.querySelector('body');
 const popupForm = document.querySelector('.img-upload__form');
 const NewPictureForm = popupForm.querySelector('.img-upload__overlay');
@@ -6,6 +9,7 @@ const FormCloseButton = popupForm.querySelector('.img-upload__cancel');
 const hashtagInput = popupForm.querySelector('.text__hashtags');
 const commentInput = popupForm.querySelector('.text__description');
 const imagePreview = popupForm.querySelector('.img-upload__preview img');
+const submitButton = popupForm.querySelector('.img-upload__submit');
 
 // Закрытие формы по клику и esc
 const onDocumentKeydown = (evt) => {
@@ -19,19 +23,23 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closeForm () {
-  ImageUploadButton.value = '';
-  hashtagInput.value = '';
-  commentInput.value = '';
-  pristine.reset();
+  // ImageUploadButton.value = '';
+  // hashtagInput.value = '';
+  // commentInput.value = '';
   NewPictureForm.classList.add('hidden');
   body.classList.remove('modal-open');
   FormCloseButton.removeEventListener('click', closeForm);
   document.removeEventListener('keydown', onDocumentKeydown);
+
+  defoltSlider();
+  resetScale();
+  pristine.reset();
+  popupForm.reset();
 }
 
 // Открытие формы
 
-const openForm = () =>{
+const openForm = () => {
   NewPictureForm.classList.remove('hidden');
   body.classList.add('modal-open');
   FormCloseButton.addEventListener('click', closeForm);
@@ -42,6 +50,22 @@ ImageUploadButton.addEventListener('change',(evt) => {
   evt.preventDefault();
   openForm();
 });
+
+// Отправка формы
+const SubmitButtonMessage = {
+  REST: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonMessage.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonMessage.REST;
+};
 
 // Валидация
 
@@ -97,9 +121,18 @@ const renderHashtagErrors = () => {
 
 pristine.addValidator(hashtagInput, validateHashtag, renderHashtagErrors);
 
-popupForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const sendForm = (cb) => {
+  popupForm.addEventListener('submit', async(evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+      await cb(formData);
+    }
+    unblockSubmitButton();
+  });
+};
 
-export {imagePreview, popupForm};
+
+export {imagePreview, sendForm, closeForm};
