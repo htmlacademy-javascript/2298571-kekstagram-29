@@ -6,6 +6,10 @@ const picturePreview = document.querySelector('.pictures');
 const pictureListFragment = document.createDocumentFragment();
 
 const createThumbnails = (pictures) => {
+
+  const pictureElements = picturePreview.querySelectorAll('.picture');
+  pictureElements.forEach((element) => element.remove());
+
   pictures.forEach((picture) => {
     const pictureItem = pictureTemplate.cloneNode(true);
     pictureItem.querySelector('.picture__img').src = picture.url;
