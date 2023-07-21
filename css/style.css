@@ -141,8 +141,9 @@ main {
 
   font-family: "Open Sans", "Arial", sans-serif;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   line-height: auto;
+  letter-spacing: 2px;
   text-transform: uppercase;
 
   cursor: pointer;
@@ -152,9 +153,9 @@ main {
 
 .img-filters__button:active,
 .img-filters__button--active {
-  color: #ff4e4e;
+  color: #232321;
 
-  background-color: #ffffff;
+  background-color: #F3E01A;
   border-radius: 2px;
 }
 
