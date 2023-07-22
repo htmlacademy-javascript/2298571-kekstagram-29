@@ -8,7 +8,7 @@ const pictureListFragment = document.createDocumentFragment();
 const removeThumbnails = () => {
   const pictureElements = picturePreview.querySelectorAll('.picture');
   pictureElements.forEach((element) => element.remove());
-}
+};
 
 // Функция отрисовывает миниатюры с соответствующими комментариями и лайками
 const createThumbnails = (pictures) => {
