@@ -1,15 +1,18 @@
-import {openPopup} from './popup.js';
+import { openPopup } from './popup.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturePreview = document.querySelector('.pictures');
-
 const pictureListFragment = document.createDocumentFragment();
 
-const createThumbnails = (pictures) => {
-
+// Функция убирает отрисованные миниатюры
+const removeThumbnails = () => {
   const pictureElements = picturePreview.querySelectorAll('.picture');
   pictureElements.forEach((element) => element.remove());
+}
 
+// Функция отрисовывает миниатюры с соответствующими комментариями и лайками
+const createThumbnails = (pictures) => {
+  removeThumbnails();
   pictures.forEach((picture) => {
     const pictureItem = pictureTemplate.cloneNode(true);
     pictureItem.querySelector('.picture__img').src = picture.url;
@@ -24,4 +27,4 @@ const createThumbnails = (pictures) => {
   picturePreview.append(pictureListFragment);
 };
 
-export {createThumbnails};
+export { createThumbnails };
