@@ -1,70 +1,27 @@
+import { Effects } from './settings.js';
+
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectButtons = document.querySelectorAll('.effects__radio');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-const EFFECTS = [
-  {
-    name: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
-  },
-  {
-    name: 'chrome',
-    style: 'grayscale',
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
-  },
-  {
-    name: 'sepia',
-    style: 'sepia',
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
-  },
-  {
-    name: 'marvin',
-    style: 'invert',
-    min: 0,
-    max: 100,
-    step: 1,
-    unit: '%',
-  },
-  {
-    name: 'phobos',
-    style: 'blur',
-    min: 0,
-    max: 3,
-    step: 0.1,
-    unit: 'px',
-  },
-  {
-    name: 'heat',
-    style: 'brightness',
-    min: 1,
-    max: 3,
-    step: 0.1,
-    unit: '',
-  },
-];
-
-const DEFAULT_EFFECT = EFFECTS[0];
+const DEFAULT_EFFECT = Effects[0];
 let chosenEffect = DEFAULT_EFFECT;
 
+// Функция проверяет текущий эффект на соответствие значениям по умолчанию
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
+// Функция сбрасывает слайдер до значений по умолчанию
 const defoltSlider = () => {
+  chosenEffect = DEFAULT_EFFECT;
   imagePreview.style.filter = 'none';
   imagePreview.className = '';
   sliderContainer.classList.add('hidden');
   sliderContainer.classList.add('hidden');
 };
 
+// Функция накладывает и регулирует эффект в зависимости от положения слайдера
 const applyEffect = () => {
   if (isDefault()) {
     defoltSlider();
@@ -75,6 +32,7 @@ const applyEffect = () => {
   imagePreview.classList.add(`effects__preview--${chosenEffect.name}`);
 };
 
+// Функция отображает и настраивает слайдер
 const updateSlider = () => {
   sliderContainer.classList.remove('hidden');
   slider.noUiSlider.updateOptions({
@@ -87,14 +45,17 @@ const updateSlider = () => {
   });
 };
 
+// Функция определяет эффект на миниатюре
 const findClickEffect = (evt) => {
+  imagePreview.classList.remove(`effects__preview--${chosenEffect.name}`);
   const button = evt.target;
   const index = Array.from(effectButtons).indexOf(button);
-  chosenEffect = EFFECTS[index];
+  chosenEffect = Effects[index];
   updateSlider();
   applyEffect();
 };
 
+// Инициализация слайдера
 noUiSlider.create(slider, {
   range: {
     min: DEFAULT_EFFECT.min,
@@ -105,10 +66,12 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-slider.noUiSlider.on('update', applyEffect);
+const setSlider = () => {
+  defoltSlider();
+  slider.noUiSlider.on('update', applyEffect);
+  effectButtons.forEach((button) => {
+    button.addEventListener('change', findClickEffect);
+  });
+};
 
-effectButtons.forEach((button) => {
-  button.addEventListener('change', findClickEffect);
-});
-
-export {defoltSlider};
+export { defoltSlider, setSlider};

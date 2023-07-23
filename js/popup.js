@@ -1,4 +1,4 @@
-const COMMENT_PER_CLICK = 5;
+import { COMMENT_PER_CLICK } from './settings.js';
 
 const body = document.querySelector('body');
 const popup = document.querySelector('.big-picture');
@@ -12,6 +12,7 @@ const pictureCommentsCounter = popup.querySelector('.social__comment-count');
 const pictureCommentsLoader = popup.querySelector('.comments-loader');
 let commentsShowArray = [];
 
+// Функция закрывает попап при нажатии Escape
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -19,22 +20,14 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+//Функция сбрасывает данные счетчика и загрузчика
 const resetPopupData = () => {
   commentsList.innerHTML = '';
   pictureCommentsLoader.classList.remove('hidden');
   pictureCommentsCounter.classList.remove('hidden');
 };
 
-function closePopup () {
-  popup.classList.add('hidden');
-  body.classList.remove('modal-open');
-  closeButton.removeEventListener('click', closePopup);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  pictureCommentsLoader.removeEventListener('click', getLoadComments);
-
-  resetPopupData();
-}
-
+// Функция создает комментарии
 const createComment = (comments) => {
   comments.forEach((comment) => {
     const commentElement = document.createElement('li');
@@ -55,26 +48,26 @@ const createComment = (comments) => {
   });
 };
 
-function getLoadComments () {
+// Функция загружает дополнительные комментарии
+const getLoadComments = () => {
   if (!commentsShowArray.length) {
     return;
   }
   const additionalComments = commentsShowArray.slice(commentsList.children.length, commentsList.children.length + COMMENT_PER_CLICK);
   createComment(additionalComments);
-  pictureCommentsCounter.textContent =
-   `${commentsList.children.length} из ${commentsShowArray.length} комментариев`;
+  pictureCommentsCounter.innerHTML =
+   `${commentsList.children.length} из <span class="comments-count">${commentsShowArray.length}</span> комментариев`;
 
   if (commentsShowArray.length <= commentsList.children.length) {
     pictureCommentsLoader.classList.add('hidden');
   }
-}
+};
 
+// Функция загружает первый блок комментариев
 const fillComments = ({comments}) => {
   const showFirstComments = comments.slice(0, COMMENT_PER_CLICK);
-
   createComment(showFirstComments);
-
-  pictureCommentsCounter.textContent = `${showFirstComments.length} из ${comments.length} комментариев`;
+  pictureCommentsCounter.innerHTML = `${showFirstComments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
 
   if (showFirstComments.length >= comments.length) {
     pictureCommentsCounter.classList.add('hidden');
@@ -82,6 +75,7 @@ const fillComments = ({comments}) => {
   }
 };
 
+// Функция открывает попап
 const openPopup = (picture) => {
   commentsList.innerHTML = '';
   popup.classList.remove('hidden');
@@ -93,11 +87,21 @@ const openPopup = (picture) => {
   pictureDescription.textContent = picture.description;
   pictureCommentsNumber.textContent = picture.comments.length;
 
-  pictureCommentsLoader.addEventListener('click', getLoadComments);
-
   fillComments(picture);
+  pictureCommentsLoader.addEventListener('click', getLoadComments);
   closeButton.addEventListener('click', closePopup);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-export {openPopup};
+
+//Функция закрывает попап
+function closePopup () {
+  popup.classList.add('hidden');
+  body.classList.remove('modal-open');
+  pictureCommentsLoader.removeEventListener('click', getLoadComments);
+  closeButton.removeEventListener('click', closePopup);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  resetPopupData();
+}
+
+export { openPopup };
