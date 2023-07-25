@@ -1,4 +1,4 @@
-import { MAX_SCALE_VALUE, MIN_SCALE_VALUE } from './settings.js';
+import { MAX_SCALE_VALUE, MIN_SCALE_VALUE, SCALE_STEP } from './settings.js';
 
 const plusSizeButton = document.querySelector('.scale__control--bigger');
 const minusSizeButton = document.querySelector('.scale__control--smaller');
@@ -12,7 +12,7 @@ const increaseSize = () => {
   if (currentSize === MAX_SCALE_VALUE) {
     return;
   }
-  currentSize += 25;
+  currentSize += SCALE_STEP;
   sizeIndicator.value = `${currentSize}%`;
   imagePreview.style.transform = `scale(${currentSize / 100})`;
 };
@@ -22,27 +22,33 @@ const decreaseSize = () => {
   if (currentSize === MIN_SCALE_VALUE) {
     return;
   }
-  currentSize -= 25;
+  currentSize -= SCALE_STEP;
   sizeIndicator.value = `${currentSize}%`;
   imagePreview.style.transform = `scale(${currentSize / 100})`;
 };
 
+const increaseSizeHandler = (evt) => {
+  evt.preventDefault();
+  increaseSize();
+};
+
+const decreaseSizeHandler = (evt) => {
+  evt.preventDefault();
+  decreaseSize();
+};
+
 // Функция добавляет обработчики событий на кнопках '+' и '-'
 const onScaleButtonClick = () => {
-  plusSizeButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    increaseSize();
-  });
-  minusSizeButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    decreaseSize();
-  });
+  plusSizeButton.addEventListener('click', increaseSizeHandler);
+  minusSizeButton.addEventListener('click', decreaseSizeHandler);
 };
 
 // Функция сбрасывает установленные значения
 const resetScale = () => {
   currentSize = MAX_SCALE_VALUE;
   imagePreview.style.transform = '';
+  plusSizeButton.removeEventListener('click', increaseSizeHandler);
+  minusSizeButton.removeEventListener('click', decreaseSizeHandler);
 };
 
 export { onScaleButtonClick, resetScale };

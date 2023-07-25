@@ -1,4 +1,4 @@
-import { THUMBMAILS_RANDOM_NUMBER } from './settings.js';
+import { THUMBNAILS_RANDOM_NUMBER } from './settings.js';
 
 const filterContainer = document.querySelector('.img-filters');
 const Filters = {
@@ -20,7 +20,7 @@ const createDiscussedFilter = (pictureA, pictureB) => pictureB.comments.length -
 const getFilteredPicture = () => {
   switch (chosenFilter) {
     case Filters.RANDOM:
-      return [...pictures].sort(getRandomFilterNumber).slice(0, THUMBMAILS_RANDOM_NUMBER);
+      return [...pictures].sort(getRandomFilterNumber).slice(0, THUMBNAILS_RANDOM_NUMBER);
     case Filters.DISCUSSED:
       return [...pictures].sort(createDiscussedFilter);
     default:
@@ -32,9 +32,7 @@ const getFilteredPicture = () => {
 const handleFilterClick = (cb) => {
   filterContainer.addEventListener ('click', (evt) => {
     const clickedButton = evt.target;
-    if (!evt.target.classList.contains('img-filters__button')) {
-      return;
-    } else if (clickedButton.id === chosenFilter){
+    if ((!evt.target.classList.contains('img-filters__button')) || (clickedButton.id === chosenFilter)){
       return;
     }
     filterContainer

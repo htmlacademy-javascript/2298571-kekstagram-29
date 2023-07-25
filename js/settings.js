@@ -1,13 +1,17 @@
 // FILTERS.JS
 // Количество отрисовываемых картинок в фильтре RANDOM
-const THUMBMAILS_RANDOM_NUMBER = 10;
+const THUMBNAILS_RANDOM_NUMBER = 10;
 
 // POPUP.JS
 // Максимально количество комментариев при клике на 'загрузить'
 const COMMENT_PER_CLICK = 5;
+
+//SCALE.JS
 // Максимальное и минимальное значение изменения размера картинки
 const MAX_SCALE_VALUE = 100;
 const MIN_SCALE_VALUE = 25;
+//Шаг изменения размера картинки
+const SCALE_STEP = 25;
 
 // UTIL.JS
 // Пауза между перерисовкой картинок при смене фильтра
@@ -31,7 +35,7 @@ const ErrorText = {
 
 // FORM-MAIN.JS
 // Разрешенные типы файлов для загрузки в приложение
-const FileTypes = ['jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 // Текст кнопки формы по умолчанию и в процессе отправки данных
 const SubmitButtonMessage = {
   REST: 'Опубликовать',
@@ -41,7 +45,7 @@ const SubmitButtonMessage = {
 
 // SLIDER.JS
 // Настройки эффектов слайдера
-const Effects = [
+const effects = [
   {
     name: 'none',
     min: 0,
@@ -117,10 +121,10 @@ const showAlert = (message) => {
 export { showAlert,
   GET_DATA_ERROR_TEXT, // main.js
   URL, Path, ErrorText, //api.js
-  THUMBMAILS_RANDOM_NUMBER, // filters.js
-  FileTypes, SubmitButtonMessage, //form-main.js
+  THUMBNAILS_RANDOM_NUMBER, // filters.js
+  FILE_TYPES, SubmitButtonMessage, //form-main.js
   COMMENT_PER_CLICK, // popup.js
-  MAX_SCALE_VALUE, MIN_SCALE_VALUE, // scale.js
-  Effects, //slider.js
+  MAX_SCALE_VALUE, MIN_SCALE_VALUE, SCALE_STEP, // scale.js
+  effects, //slider.js
   FILTER_CHANGE_TIME_DELAY // util.js
 };

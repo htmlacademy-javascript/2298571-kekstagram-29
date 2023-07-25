@@ -1,5 +1,5 @@
 const popupForm = document.querySelector('.img-upload__form');
-const hashtagInput = popupForm.querySelector('.text__hashtags');
+const hashtags = popupForm.querySelector('.text__hashtags');
 
 // Инициализация Pristine
 const pristine = new Pristine (popupForm, {
@@ -26,12 +26,12 @@ const checkDuplicates = (array) => {
 // Функция модифицирует полученный хэштег (убирает лишние пробелы, приводит в нижний регистр) в массив
 // и запускает общую проверку на соответствие.
 const validateHashtag = () => {
-  const hashtagArray = hashtagInput.value.trim().toLowerCase().split(/\s+/);
+  const modifiedHashtags = hashtags.value.trim().toLowerCase().split(/\s+/);
 
-  if (hashtagInput.value === '' ||
-    hashtagArray.length <= 5 &&
-    checkSymbolsAndLength(hashtagArray) &&
-    !checkDuplicates(hashtagArray)){
+  if (hashtags.value === '' ||
+  modifiedHashtags.length <= 5 &&
+    checkSymbolsAndLength(modifiedHashtags) &&
+    !checkDuplicates(modifiedHashtags)){
     return true;
   }
   return false;
@@ -39,19 +39,19 @@ const validateHashtag = () => {
 
 // Функция отрисовывает ошибки для невалидных комментариев
 const renderHashtagErrors = () => {
-  const hashtagArray = hashtagInput.value.trim().toLowerCase().split(/\s+/);
+  const modifiedHashtags = hashtags.value.trim().toLowerCase().split(/\s+/);
   let errorMessage = '';
 
-  if (!checkSymbolsAndLength(hashtagArray)) {
+  if (!checkSymbolsAndLength(modifiedHashtags)) {
     errorMessage = 'Введён невалидный хэш-тег';
-  } else if (checkDuplicates(hashtagArray)) {
+  } else if (checkDuplicates(modifiedHashtags)) {
     errorMessage = 'Хэш-теги повторяются';
-  } else if (hashtagArray.length > 5) {
+  } else if (modifiedHashtags.length > 5) {
     errorMessage = 'Превышено количество хэш-тегов';
   }
   return errorMessage;
 };
 
-pristine.addValidator(hashtagInput, validateHashtag, renderHashtagErrors);
+pristine.addValidator(hashtags, validateHashtag, renderHashtagErrors);
 
 export { pristine };

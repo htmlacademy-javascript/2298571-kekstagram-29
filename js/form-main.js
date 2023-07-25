@@ -1,8 +1,8 @@
-import { setSlider, defoltSlider } from './slider.js';
+import { setSlider, setDefaultSlider } from './slider.js';
 import { onScaleButtonClick, resetScale } from './scale.js';
 import { checkMessageOnDisplay } from './messages.js';
 import { pristine } from './form-validation.js';
-import { FileTypes, SubmitButtonMessage } from './settings.js';
+import { FILE_TYPES, SubmitButtonMessage } from './settings.js';
 
 const body = document.querySelector('body');
 const popupForm = document.querySelector('.img-upload__form');
@@ -34,7 +34,7 @@ function closeForm () {
   FormCloseButton.removeEventListener('click', closeForm);
   document.removeEventListener('keydown', onDocumentKeydown);
 
-  defoltSlider();
+  setDefaultSlider();
   resetScale();
   pristine.reset();
   popupForm.reset();
@@ -54,7 +54,7 @@ const openForm = () => {
 const uploadPhoto = () =>{
   const file = ImageUploadButton.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FileTypes.some((i) => fileName.endsWith(i));
+  const matches = FILE_TYPES.some((i) => fileName.endsWith(i));
 
   if (matches) {
     imagePreview.src = URL.createObjectURL(file);

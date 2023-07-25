@@ -10,7 +10,7 @@ const pictureDescription = popup.querySelector('.social__caption');
 const commentsList = popup.querySelector('.social__comments');
 const pictureCommentsCounter = popup.querySelector('.social__comment-count');
 const pictureCommentsLoader = popup.querySelector('.comments-loader');
-let commentsShowArray = [];
+let commentsShown = [];
 
 // Функция закрывает попап при нажатии Escape
 const onDocumentKeydown = (evt) => {
@@ -50,15 +50,15 @@ const createComment = (comments) => {
 
 // Функция загружает дополнительные комментарии
 const getLoadComments = () => {
-  if (!commentsShowArray.length) {
+  if (!commentsShown.length) {
     return;
   }
-  const additionalComments = commentsShowArray.slice(commentsList.children.length, commentsList.children.length + COMMENT_PER_CLICK);
+  const additionalComments = commentsShown.slice(commentsList.children.length, commentsList.children.length + COMMENT_PER_CLICK);
   createComment(additionalComments);
   pictureCommentsCounter.innerHTML =
-   `${commentsList.children.length} из <span class="comments-count">${commentsShowArray.length}</span> комментариев`;
+   `${commentsList.children.length} из <span class="comments-count">${commentsShown.length}</span> комментариев`;
 
-  if (commentsShowArray.length <= commentsList.children.length) {
+  if (commentsShown.length <= commentsList.children.length) {
     pictureCommentsLoader.classList.add('hidden');
   }
 };
@@ -80,7 +80,7 @@ const openPopup = (picture) => {
   commentsList.innerHTML = '';
   popup.classList.remove('hidden');
 
-  commentsShowArray = picture.comments;
+  commentsShown = picture.comments;
   body.classList.add('modal-open');
   bigPicture.src = picture.url;
   pictureLikes.textContent = picture.likes;
