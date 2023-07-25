@@ -13,7 +13,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 // Функция закрывает сообщение при клике на фон окна
-const OverlayClickClose = (evt) => {
+const onOverlayClick = (evt) => {
   const messageOpen = checkMessageOnDisplay();
   const isClickOnMessage = evt.target.closest('.success__inner, .error__inner');
   const isClickOnButton = evt.target.closest('.success__button, .error__button');
@@ -31,7 +31,7 @@ function closeMessage () {
     messageOpen.remove();
   }
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', OverlayClickClose);
+  document.removeEventListener('click', onOverlayClick);
 }
 
 // Функция закрывает сообщение при ошибке отправки данных
@@ -41,7 +41,7 @@ const showErrorMessage = () => {
   const errorButton = document.querySelector('.error__button');
   errorButton.addEventListener('click', closeMessage);
   document.addEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('click', OverlayClickClose);
+  document.addEventListener('click', onOverlayClick);
 };
 
 // Функция закрывает сообщение при успешной отправке данных
@@ -51,7 +51,7 @@ const showSuccessMessage = () => {
   const successButton = document.querySelector('.success__button');
   successButton.addEventListener('click', closeMessage);
   document.addEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('click', OverlayClickClose);
+  document.addEventListener('click', onOverlayClick);
 };
 
 
