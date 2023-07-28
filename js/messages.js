@@ -8,7 +8,7 @@ const checkMessageOnDisplay = () => document.querySelector('.error, .success');
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape' || evt.key === 'Enter') {
     evt.preventDefault();
-    closeMessage();
+    onMessageClose();
   }
 };
 
@@ -20,12 +20,12 @@ const onOverlayClick = (evt) => {
 
   if (messageOpen && !isClickOnMessage && !isClickOnButton) {
     evt.preventDefault();
-    closeMessage();
+    onMessageClose();
   }
 };
 
 // Функция закрывает сообщение
-function closeMessage () {
+function onMessageClose () {
   const messageOpen = checkMessageOnDisplay();
   if (messageOpen) {
     messageOpen.remove();
@@ -39,7 +39,7 @@ const showErrorMessage = () => {
   const clonedError = errorTemplate.content.cloneNode(true);
   document.body.appendChild(clonedError);
   const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', closeMessage);
+  errorButton.addEventListener('click', onMessageClose);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onOverlayClick);
 };
@@ -49,7 +49,7 @@ const showSuccessMessage = () => {
   const clonedSuccess = successTemplate.content.cloneNode(true);
   document.body.appendChild(clonedSuccess);
   const successButton = document.querySelector('.success__button');
-  successButton.addEventListener('click', closeMessage);
+  successButton.addEventListener('click', onMessageClose);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onOverlayClick);
 };

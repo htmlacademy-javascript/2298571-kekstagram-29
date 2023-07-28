@@ -1,3 +1,5 @@
+import { HASHTAGS_ALLOWED_NUMBER } from './settings.js';
+
 const popupForm = document.querySelector('.img-upload__form');
 const hashtags = popupForm.querySelector('.text__hashtags');
 
@@ -9,7 +11,7 @@ const pristine = new Pristine (popupForm, {
 });
 
 // Функция проверяет хэштег на разрешенную длину и символы.
-const checkSymbolsAndLength = (array) =>{
+const checkSymbolsAndLength = (array) => {
   const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
   const allElementsMatch = array.every((item) => regexp.test(item));
   return allElementsMatch;
@@ -29,7 +31,7 @@ const validateHashtag = () => {
   const modifiedHashtags = hashtags.value.trim().toLowerCase().split(/\s+/);
 
   if (hashtags.value === '' ||
-  modifiedHashtags.length <= 5 &&
+  modifiedHashtags.length <= HASHTAGS_ALLOWED_NUMBER &&
     checkSymbolsAndLength(modifiedHashtags) &&
     !checkDuplicates(modifiedHashtags)){
     return true;
@@ -46,7 +48,7 @@ const renderHashtagErrors = () => {
     errorMessage = 'Введён невалидный хэш-тег';
   } else if (checkDuplicates(modifiedHashtags)) {
     errorMessage = 'Хэш-теги повторяются';
-  } else if (modifiedHashtags.length > 5) {
+  } else if (modifiedHashtags.length > HASHTAGS_ALLOWED_NUMBER) {
     errorMessage = 'Превышено количество хэш-тегов';
   }
   return errorMessage;

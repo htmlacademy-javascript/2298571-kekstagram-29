@@ -16,7 +16,7 @@ let commentsShown = [];
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closePopup();
+    onPopupClose();
   }
 };
 
@@ -49,7 +49,7 @@ const createComment = (comments) => {
 };
 
 // Функция загружает дополнительные комментарии
-const getLoadComments = () => {
+const onCommentsLoad = () => {
   if (!commentsShown.length) {
     return;
   }
@@ -88,18 +88,18 @@ const openPopup = (picture) => {
   pictureCommentsNumber.textContent = picture.comments.length;
 
   fillComments(picture);
-  pictureCommentsLoader.addEventListener('click', getLoadComments);
-  closeButton.addEventListener('click', closePopup);
+  pictureCommentsLoader.addEventListener('click', onCommentsLoad);
+  closeButton.addEventListener('click', onPopupClose);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 
 //Функция закрывает попап
-function closePopup () {
+function onPopupClose () {
   popup.classList.add('hidden');
   body.classList.remove('modal-open');
-  pictureCommentsLoader.removeEventListener('click', getLoadComments);
-  closeButton.removeEventListener('click', closePopup);
+  pictureCommentsLoader.removeEventListener('click', onCommentsLoad);
+  closeButton.removeEventListener('click', onPopupClose);
   document.removeEventListener('keydown', onDocumentKeydown);
   resetPopupData();
 }

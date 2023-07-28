@@ -46,7 +46,7 @@ const updateSlider = () => {
 };
 
 // Функция определяет эффект на миниатюре
-const findClickEffect = (evt) => {
+const onEffectButtonsClick = (evt) => {
   imagePreview.classList.remove(`effects__preview--${chosenEffect.name}`);
   const button = evt.target;
   const index = Array.from(effectButtons).indexOf(button);
@@ -70,7 +70,7 @@ const setSlider = () => {
   setDefaultSlider();
   slider.noUiSlider.on('update', applyEffect);
   effectButtons.forEach((button) => {
-    button.addEventListener('change', findClickEffect);
+    button.addEventListener('change', onEffectButtonsClick);
   });
 };
 

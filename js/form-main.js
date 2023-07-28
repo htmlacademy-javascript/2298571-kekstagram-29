@@ -23,15 +23,15 @@ const onDocumentKeydown = (evt) => {
       return;
     }
     evt.preventDefault();
-    closeForm();
+    onFormClose();
   }
 };
 
 // Функция сбрасывает заполненные поля, слайдер, скейл, валидацию и закрывает форму
-function closeForm () {
+function onFormClose () {
   NewPictureForm.classList.add('hidden');
   body.classList.remove('modal-open');
-  FormCloseButton.removeEventListener('click', closeForm);
+  FormCloseButton.removeEventListener('click', onFormClose);
   document.removeEventListener('keydown', onDocumentKeydown);
 
   setDefaultSlider();
@@ -44,7 +44,7 @@ function closeForm () {
 const openForm = () => {
   NewPictureForm.classList.remove('hidden');
   body.classList.add('modal-open');
-  FormCloseButton.addEventListener('click', closeForm);
+  FormCloseButton.addEventListener('click', onFormClose);
   document.addEventListener('keydown', onDocumentKeydown);
   onScaleButtonClick();
   setSlider();
@@ -97,4 +97,4 @@ const sendForm = (cb) => {
   });
 };
 
-export { imagePreview, sendForm, closeForm };
+export { imagePreview, sendForm, onFormClose };
